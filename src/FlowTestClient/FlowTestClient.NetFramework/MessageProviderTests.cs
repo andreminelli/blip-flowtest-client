@@ -13,7 +13,7 @@ namespace FlowTestClient.NetFramework
     {
         [TestMethod]
         [DataRow("> oi", "oi", DisplayName = "Case1")]
-        [DataRow(@"> oi\noi", "oi\noi", DisplayName = "Case1")]
+        [DataRow(@"> oi\noi", "oi\noi", DisplayName = "Case2")]
         public void Build_Message_ToBot_With_Text(string input, string expectedText)
         {
             expectedText = expectedText.Replace("\n", Environment.NewLine);
