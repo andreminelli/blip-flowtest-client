@@ -10,6 +10,15 @@ namespace FlowTestClient
 {
     public class ScriptReader : IScriptReader
     {
+        private readonly IMessageProvider _messageProvider;
+
+        public ScriptReader(
+            IMessageProvider messageProvider
+            )
+        {
+            _messageProvider = messageProvider;
+        }
+
         public async Task<FlowTest> ExtractFlowTestAsync(string fullFileName, CancellationToken cancellationToken)
         {
             var flowTest = new FlowTest();
@@ -41,35 +50,13 @@ namespace FlowTestClient
             var accessKey = lines.Dequeue();
             accessKey = accessKey.Replace("AccessKey:", string.Empty).Trim();
             flowTest.AccessKey = accessKey;
-            
-            while(lines.Count > 0)
+
+            while (lines.Count > 0)
             {
                 var item = lines.Dequeue();
                 item = item.TrimStart();
 
-                var direction = item[0];
-
-                TestMessage message = null;
-
-                if(direction == '>') // To bot (request)
-                {
-                    message = new ToBotMessage()
-                    {
-                        RawTextContent = item.Substring(1).Trim()
-                    };
-                }
-                else if(direction == '<') // From bot (response)
-                {
-                    message = new FromBotMessage()
-                    {
-                        RawTextContent = item.Substring(1).Trim()
-                    };
-                }
-                else
-                {
-                    message = new UnexpectedTestMessage();
-                }
-
+                TestMessage message = _messageProvider.BuildMessage(item);
                 flowTest.AddTestMessage(message);
 
             }
