@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace FlowTestClient.Models
+namespace FlowTest.Contracts.Models
 {
     public class ToBotMessage : TestMessage
     {

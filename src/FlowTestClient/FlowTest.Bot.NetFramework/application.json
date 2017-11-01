@@ -1,0 +1,30 @@
+﻿{
+  "identifier": "id",
+  "accessKey": "access",
+  "messageReceivers": [
+    {
+      "priority": 1,
+      "mediaType": "text/plain",
+      "content": "#teste",
+      "response": {
+        "mediaType": "text/plain",
+        "plainContent": "Olá!"
+      }
+    },
+    {
+      "priority": 100,
+      "mediaType": "text/plain",
+      "response": {
+        "mediaType": "text/plain",
+        "plainContent": "default"
+      }
+
+    }
+  ],
+  "settings": {
+    "setting1": "value1"
+  },
+  "startupType": "Startup",
+  "serviceProviderType": "ServiceProvider",
+  "schemaVersion": 2
+}

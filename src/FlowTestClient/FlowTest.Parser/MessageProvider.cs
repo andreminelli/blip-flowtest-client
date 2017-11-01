@@ -1,9 +1,9 @@
-﻿using System;
+﻿using FlowTest.Contracts.Models;
+using System;
 using System.Collections.Generic;
 using System.Text;
-using FlowTestClient.Models;
 
-namespace FlowTestClient
+namespace FlowTest.Parser
 {
     public class MessageProvider : IMessageProvider
     {

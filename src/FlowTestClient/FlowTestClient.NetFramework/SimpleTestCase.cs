@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace FlowTestClient.NetFramework
+namespace FlowTestClient.NetFramework.Tests
 {
     [TestClass]
     public class SimpleTestCase

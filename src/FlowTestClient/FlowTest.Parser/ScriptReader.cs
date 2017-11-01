@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
-using FlowTestClient.Models;
 using System.IO;
+using FlowTest.Contracts.Models;
 
-namespace FlowTestClient
+namespace FlowTest.Parser
 {
     public class ScriptReader : IScriptReader
     {
@@ -19,9 +19,9 @@ namespace FlowTestClient
             _messageProvider = messageProvider;
         }
 
-        public async Task<FlowTest> ExtractFlowTestAsync(string fullFileName, CancellationToken cancellationToken)
+        public async Task<FlowTestCase> ExtractFlowTestAsync(string fullFileName, CancellationToken cancellationToken)
         {
-            var flowTest = new FlowTest();
+            var flowTest = new FlowTestCase();
             var lines = new Queue<string>();
 
             using (var fileStream = File.OpenRead(fullFileName))
@@ -35,21 +35,21 @@ namespace FlowTestClient
 
             }
 
-            var user = lines.Dequeue();
-            user = user.Replace("User:", string.Empty).Trim();
-            flowTest.User = user;
+            //var user = lines.Dequeue();
+            //user = user.Replace("User:", string.Empty).Trim();
+            //flowTest.User = user;
 
-            var channel = lines.Dequeue();
-            channel = channel.Replace("Channel:", string.Empty).Trim();
-            flowTest.Channel = channel;
+            //var channel = lines.Dequeue();
+            //channel = channel.Replace("Channel:", string.Empty).Trim();
+            //flowTest.Channel = channel;
 
-            var identifier = lines.Dequeue();
-            identifier = identifier.Replace("Identifier:", string.Empty).Trim();
-            flowTest.Identifier = identifier;
+            //var identifier = lines.Dequeue();
+            //identifier = identifier.Replace("Identifier:", string.Empty).Trim();
+            //flowTest.Identifier = identifier;
 
-            var accessKey = lines.Dequeue();
-            accessKey = accessKey.Replace("AccessKey:", string.Empty).Trim();
-            flowTest.AccessKey = accessKey;
+            //var accessKey = lines.Dequeue();
+            //accessKey = accessKey.Replace("AccessKey:", string.Empty).Trim();
+            //flowTest.AccessKey = accessKey;
 
             while (lines.Count > 0)
             {

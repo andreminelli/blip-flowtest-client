@@ -1,7 +1,3 @@
-User: random
-Channel: Messenger
-Identifier: 123
-AccessKey: 1234
 > oi
 < olá!
 > que bom te ver

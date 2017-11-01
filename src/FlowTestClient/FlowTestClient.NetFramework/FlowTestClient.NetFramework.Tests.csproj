@@ -8,8 +8,8 @@
     <ProjectGuid>{235329B1-A98B-40B8-93F6-F6A9B7EA5142}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>FlowTestClient.NetFramework</RootNamespace>
-    <AssemblyName>FlowTestClient.NetFramework</AssemblyName>
+    <RootNamespace>FlowTestClient.NetFramework.Tests</RootNamespace>
+    <AssemblyName>FlowTestClient.NetFramework.Tests</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <NuGetPackageImportStamp>
@@ -68,18 +68,17 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\FlowTestClient\FlowTestClient.csproj">
-      <Project>{a67fee81-e34a-4c07-bc25-054fa7c90db3}</Project>
-      <Name>FlowTestClient</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
     <None Include="Examples\ex1.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
   </ItemGroup>
   <ItemGroup>
     <Service Include="{82A7F48D-3B50-4B1E-B82E-3ADA8210C358}" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Examples\ex2.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
