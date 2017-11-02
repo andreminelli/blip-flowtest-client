@@ -27,3 +27,9 @@
 > #qr3
 < [qr] ^.*reply$ <.*#.*#.*>
 < [qr] ^.*reply$ <op4#.*>
+> #cs1
+< 
+> #cs1
+< [cs]
+> #cs1
+< [cs] < img#title#subtitle#1 ## img#title#subtitle#2 ## img#title#subtitle#3 >

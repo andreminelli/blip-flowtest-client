@@ -14,12 +14,14 @@ namespace FlowTest.Parser
         private readonly Regex _menuRegex;
         private readonly Regex _quickReplyRegex;
         private readonly Regex _simpleOptionsRegex;
+        private readonly Regex _carouselRegex;
 
         public MessageProvider()
         {
             _menuRegex = new Regex(@"\[((MN)|(MENU))\]", DefaultRegexOptions);
             _quickReplyRegex = new Regex(@"\[((QR)|(QUICKREPLY))\]", DefaultRegexOptions);
             _simpleOptionsRegex = new Regex(@"<.*>", DefaultRegexOptions);
+            _carouselRegex = new Regex(@"\[((CS)|(CAROUSEL))\]", DefaultRegexOptions);
         }
 
         public TestMessage BuildMessage(string input)
@@ -83,6 +85,12 @@ namespace FlowTest.Parser
                     fromBotMessage.Options = opts.ToList();
                     content = _simpleOptionsRegex.Replace(content, string.Empty).Trim();
                 }
+            }
+            else
+            if (_carouselRegex.IsMatch(content))
+            {
+                fromBotMessage.ContentType = "carousel";
+                content = _carouselRegex.Replace(content, string.Empty).Trim();
             }
 
             fromBotMessage.Text = content;

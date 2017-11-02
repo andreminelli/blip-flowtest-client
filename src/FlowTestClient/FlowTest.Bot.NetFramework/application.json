@@ -1,6 +1,6 @@
 ﻿{
   "identifier": "id",
-  "accessKey": "access",
+  "accessKey": "ak",
   "messageReceivers": [
     {
       "priority": 1,
@@ -65,7 +65,18 @@
         "command": "#qr3",
         "doc": "quickreply|op1|op2|op3||quickreply|op4|op5",
         "type": "quickreply"
+      },
+      {
+        "command": "#cs1",
+        "doc": "img|title|subtitle|bt1%img|title|subtitle|bt1&bt2%img|title|subtitle|bt1&bt2&bt3",
+        "type": "carousel_img"
+      },
+      {
+        "command": "#cs2",
+        "doc": "text|bt1%text|bt1&bt2",
+        "type": "carousel_txt"
       }
+
     ]
   },
   "startupType": "Startup",

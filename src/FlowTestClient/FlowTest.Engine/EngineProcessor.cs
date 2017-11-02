@@ -83,6 +83,11 @@ namespace FlowTest.Engine
                 return CheckMenuDocument((document as Select), fromBotMessage);
             }
 
+            if (document is DocumentCollection)
+            {
+                return CheckCarouselDocument((document as DocumentCollection), fromBotMessage);
+            }
+
             return null;
         }
 
@@ -126,6 +131,11 @@ namespace FlowTest.Engine
 
             return new TestResult { Works = textOk && optsOk && typeOk };
 
+        }
+
+        private TestResult CheckCarouselDocument(DocumentCollection documentCollection, FromBotMessage fromBotMessage)
+        {
+            return new TestResult { Works = fromBotMessage.ContentType == "carousel" };
         }
     }
 }
