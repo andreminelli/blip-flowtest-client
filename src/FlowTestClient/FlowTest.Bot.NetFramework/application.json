@@ -20,18 +20,51 @@
   ],
   "settingsType": "BotSettings",
   "settings": {
-    "textdocs": [
+    "testdocs": [
       {
-        "command": "#case1",
-        "doc": "texto"
+        "command": "#text1",
+        "doc": "texto",
+        "type": "text"
       },
       {
-        "command": "#case2",
-        "doc": "texto\ntexto\ntexto"
+        "command": "#text2",
+        "doc": "texto\ntexto\ntexto",
+        "type": "text"
       },
       {
-        "command": "#case3",
-        "doc": "texto;;texto"
+        "command": "#text3",
+        "doc": "texto||texto",
+        "type": "text"
+      },
+      {
+        "command": "#menu1",
+        "doc": "menu|op1",
+        "type": "menu"
+      },
+      {
+        "command": "#menu2",
+        "doc": "menu|op1|op2|op3",
+        "type": "menu"
+      },
+      {
+        "command": "#menu3",
+        "doc": "menu|op1|op2|op3||menu|op4|op5",
+        "type": "menu"
+      },
+      {
+        "command": "#qr1",
+        "doc": "quickreply|op1",
+        "type": "quickreply"
+      },
+      {
+        "command": "#qr2",
+        "doc": "quickreply|op1|op2|op3",
+        "type": "quickreply"
+      },
+      {
+        "command": "#qr3",
+        "doc": "quickreply|op1|op2|op3||quickreply|op4|op5",
+        "type": "quickreply"
       }
     ]
   },

@@ -29,20 +29,20 @@ namespace FlowTest.Engine
             {
                 IsSuccessfully = true
             };
-            
+
             var messages = testCase.TestMessagesQueue;
-            
-            while(messages.Any())
+
+            while (messages.Any())
             {
                 var message = messages.Dequeue();
 
-                if(message is ToBotMessage)
+                if (message is ToBotMessage)
                 {
                     await _channel.SendTextAsync(message.RawTextContent, cancellationToken);
                     continue;
                 }
 
-                if(message is FromBotMessage)
+                if (message is FromBotMessage)
                 {
                     var document = await _channel.ReceiveAsync(cancellationToken);
                     var localTestResult = CheckDocument(document, message as FromBotMessage);
@@ -52,25 +52,80 @@ namespace FlowTest.Engine
                 }
 
                 //Ignore the rest
-                
+
             }
 
             return result;
         }
 
+        private Regex GetRegex(string pattern)
+        {
+            return new Regex(pattern, RegexOptions.Multiline | RegexOptions.IgnoreCase);
+        }
+
+
         private TestResult CheckDocument(Document document, FromBotMessage fromBotMessage)
         {
+            if (fromBotMessage.ContentType == "any") return new TestResult { Works = true };
+
+            if (document is PlainDocument)
+            {
+                return CheckTextDocument(document.ToString(), fromBotMessage);
+            }
+
+            if (document is PlainText)
+            {
+                return CheckTextDocument((document as PlainText).Text, fromBotMessage);
+            }
+
+            if (document is Select)
+            {
+                return CheckMenuDocument((document as Select), fromBotMessage);
+            }
+
+            return null;
+        }
+
+        private TestResult CheckTextDocument(string textDocument, FromBotMessage fromBotMessage)
+        {
             var testResult = new TestResult();
-
-            var text = document.ToString();
-
-            var regex = new Regex(fromBotMessage.RawTextContent);
-
-            var match = regex.Match(text);
-
-            testResult.Works = match.Success;
+            var regex = GetRegex(fromBotMessage.RawTextContent);
+            testResult.Works = regex.IsMatch(textDocument);
 
             return testResult;
+        }
+
+        private TestResult CheckMenuDocument(Select select, FromBotMessage fromBotMessage)
+        {
+            var textRegex = GetRegex(fromBotMessage.Text);
+            var textOk = textRegex.IsMatch(select.Text);
+
+            var optsOk = true;
+
+            if (fromBotMessage.OptionsNumber > 0)
+            {
+                if (fromBotMessage.OptionsNumber != select.Options.Length)
+                {
+                    optsOk = false;
+                }
+                else
+                {
+                    for (int i = 0; i < select.Options.Length; i++)
+                    {
+                        var optRegex = GetRegex(fromBotMessage.Options[i]);
+                        if (!optRegex.IsMatch(select.Options[i].Text))
+                        {
+                            optsOk = false;
+                        }
+                    }
+                }
+
+            }
+
+            var typeOk = select.Scope == SelectScope.Immediate ? (fromBotMessage.ContentType == "quickreply") : (fromBotMessage.ContentType == "menu");
+
+            return new TestResult { Works = textOk && optsOk && typeOk };
+
         }
     }
 }

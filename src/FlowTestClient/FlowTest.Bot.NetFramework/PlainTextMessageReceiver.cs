@@ -8,6 +8,7 @@ using Takenet.MessagingHub.Client.Sender;
 using System.Diagnostics;
 using System.Linq;
 using System.Collections.Generic;
+using Lime.Messaging.Contents;
 
 namespace FlowTest.Bot.NetFramework
 {
@@ -30,28 +31,53 @@ namespace FlowTest.Bot.NetFramework
             var text = message.Content.ToString();
             var response = string.Empty;
 
-            var docs = _settings.TextDocs;
+            var docs = _settings.TestDoc;
 
-            var textDoc = docs.FirstOrDefault(d => d.Command.Equals(text, StringComparison.OrdinalIgnoreCase));
+            var testDoc = docs.FirstOrDefault(d => d.Command.Equals(text, StringComparison.OrdinalIgnoreCase));
 
-            if (textDoc == default(TestDoc))
+            if (testDoc == default(TestDoc))
             {
                 await _sender.SendMessageAsync("none", message.From, cancellationToken);
                 return;
             }
 
             var taskList = new List<Task>();
-            textDoc.PlainDocument
-                .Split(new string[] { ";;" }, StringSplitOptions.RemoveEmptyEntries)
+            testDoc.RawDocument
+                .Split(new string[] { "||" }, StringSplitOptions.RemoveEmptyEntries)
                 .ForEach(e =>
                 {
-                    taskList.Add(_sender.SendMessageAsync(e, message.From, cancellationToken));
+                    taskList.Add(_sender.SendMessageAsync(GetDocument(e, testDoc.Type), message.From, cancellationToken));
                 });
 
             foreach (var task in taskList)
             {
                 await task;
             }
+        }
+
+        private Document GetDocument(string e, string type)
+        {
+            if("text" == type)
+            {
+                return PlainText.Parse(e);
+            }
+
+            if ("menu" == type || "quickreply" == type)
+            {
+                var parts = e.Split('|');
+                var select = new Select
+                {
+                    Text = parts[0],
+                    Options = parts
+                                .Where(p => p != parts[0])
+                                .Select(o => new SelectOption { Text = o, Value = PlainText.Parse(o)})
+                                .ToArray(),
+                    Scope = ("quickreply" == type) ? SelectScope.Immediate : SelectScope.Transient
+                };
+                return select;
+            }
+
+            return PlainText.Parse(e);
         }
     }
 }

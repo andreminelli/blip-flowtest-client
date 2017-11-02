@@ -1,7 +1,29 @@
-> #case1
+> #text1
 < texto
-> #case2
-< texto\ntexto\ntexto
-> #case3
+> #text2
+< texto(\r\n|\r|\n)texto(\r\n|\r|\n)texto
+> #text3
 < texto
 < texto
+> #menu1
+< [mn]
+> #menu1
+<
+> #menu1
+< [mn] <p(1|2)$>
+> #menu1
+< [mn] menu <.*>
+> #menu2
+< [mn] menu <op1#op2#op3>
+> #menu3
+< [mn] menu
+< [mn] menu <op4#op5>
+> #qr1
+<
+> #qr1
+< [qr]
+> #qr2
+< [qr] ^.*reply$ <.*#.*#.*>
+> #qr3
+< [qr] ^.*reply$ <.*#.*#.*>
+< [qr] ^.*reply$ <op4#.*>

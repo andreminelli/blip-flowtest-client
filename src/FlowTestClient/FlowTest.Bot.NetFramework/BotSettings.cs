@@ -10,8 +10,8 @@ namespace FlowTest.Bot.NetFramework
     [DataContract]
     public class BotSettings
     {
-        [DataMember(Name = "textdocs")]
-        public List<TestDoc> TextDocs { get; set; }
+        [DataMember(Name = "testdocs")]
+        public List<TestDoc> TestDoc { get; set; }
     }
 
     [DataContract]
@@ -22,6 +22,10 @@ namespace FlowTest.Bot.NetFramework
 
         [DataMember(Name = "doc")]
 
-        public string PlainDocument { get; set; }
+        public string RawDocument { get; set; }
+
+        [DataMember(Name = "type")]
+        public string Type { get; set; }
+
     }
 }
