@@ -1,10 +1,12 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using FlowTest.Parser;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using SimpleInjector;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace FlowTestClient.NetFramework.Tests
@@ -25,7 +27,7 @@ namespace FlowTestClient.NetFramework.Tests
                 var scriptReader = container.GetInstance<IScriptReader>();
 
 
-                var r = scriptReader.ExtractFlowTestAsync(filename).Result;
+                var r = scriptReader.ExtractFlowTestAsync(filename, CancellationToken.None).Result;
 
 
                 Assert.IsTrue(r != null && r.TestMessagesQueue.Count > 0); 

@@ -4,12 +4,9 @@
   "messageReceivers": [
     {
       "priority": 1,
-      "mediaType": "text/plain",
-      "content": "#teste",
-      "response": {
-        "mediaType": "text/plain",
-        "plainContent": "Olá!"
-      }
+      "type": "PlainTextMessageReceiver",
+      "mediaType": "text/plain"
+
     },
     {
       "priority": 100,
@@ -21,8 +18,22 @@
 
     }
   ],
+  "settingsType": "BotSettings",
   "settings": {
-    "setting1": "value1"
+    "textdocs": [
+      {
+        "command": "#case1",
+        "doc": "texto"
+      },
+      {
+        "command": "#case2",
+        "doc": "texto\ntexto\ntexto"
+      },
+      {
+        "command": "#case3",
+        "doc": "texto;;texto"
+      }
+    ]
   },
   "startupType": "Startup",
   "serviceProviderType": "ServiceProvider",

@@ -1,6 +1,7 @@
-> #teste
-< Olá!
-> #teste
-< Olá!
-> #teste
-< Olás
+> #case1
+< texto
+> #case2
+< texto\ntexto\ntexto
+> #case3
+< texto
+< texto

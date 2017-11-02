@@ -1,4 +1,6 @@
-﻿using FlowTestClient.Models;
+﻿using FlowTest.Contracts.Models;
+using FlowTest.Parser;
+
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Collections.Generic;

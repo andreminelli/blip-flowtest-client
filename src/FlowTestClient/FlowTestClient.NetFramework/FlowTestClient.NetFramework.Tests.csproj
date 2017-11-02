@@ -80,6 +80,16 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\FlowTest.Contracts\FlowTest.Contracts.csproj">
+      <Project>{8D4DF1E5-2D3D-4A1B-8FC9-CC1803950CE4}</Project>
+      <Name>FlowTest.Contracts</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\FlowTest.Parser\FlowTest.Parser.csproj">
+      <Project>{6BEA1CFF-9F4D-4ECA-B1D5-308D4D6A98AD}</Project>
+      <Name>FlowTest.Parser</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>

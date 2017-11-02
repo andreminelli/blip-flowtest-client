@@ -28,7 +28,7 @@ namespace FlowTest.Channel.BlipTestHost
 
         public async Task<Document> ReceiveAsync(CancellationToken cancellationToken)
         {
-            var message = await _testHost.GetResponseIgnoreFireAndForgetAsync();
+            var message = await _testHost.GetResponseIgnoreFireAndForgetAsync(false);
             return message.Content;
         }
 

@@ -20,11 +20,8 @@ namespace FlowTest.TestConsole
         {
             var host = new TestHost(typeof(Startup).Assembly, TimeSpan.FromMinutes(2), TimeSpan.FromMinutes(2));
             var eventTrackExtension = Substitute.For<IEventTrackExtension>();
-            //var container = host.AddRegistrationAndStartAsync(eventTrackExtension).GetAwaiter().GetResult();
-
-            host.StartAsync().GetAwaiter().GetResult();
-
-
+            var container = host.AddRegistrationAndStartAsync(eventTrackExtension).GetAwaiter().GetResult();
+            
             ITestChannel channel = new BlipTestHostChannel(host, new Contracts.Models.TestCaseSettings
             {
                 User = "random",
