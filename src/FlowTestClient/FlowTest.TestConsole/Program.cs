@@ -2,6 +2,7 @@
 using FlowTest.Channel.BlipTestHost;
 using FlowTest.Client;
 using FlowTest.Contracts;
+using FlowTest.Contracts.Models;
 using NSubstitute;
 using System;
 using System.Collections.Generic;
@@ -18,11 +19,15 @@ namespace FlowTest.TestConsole
     {
         static void Main(string[] args)
         {
-            var host = new TestHost(typeof(Startup).Assembly, TimeSpan.FromMinutes(2), TimeSpan.FromMinutes(2));
-            var eventTrackExtension = Substitute.For<IEventTrackExtension>();
-            var container = host.AddRegistrationAndStartAsync(eventTrackExtension).GetAwaiter().GetResult();
-            
-            ITestChannel channel = new BlipTestHostChannel(host, new Contracts.Models.TestCaseSettings
+
+            var blipTestHostChannelSettings = new BlipTestHostChannelSettings
+            {
+                AssemblyReference = typeof(Startup).Assembly,
+                MessageTimeout = TimeSpan.FromMinutes(2),
+                NotificationTimeout = TimeSpan.FromMinutes(2)
+            };
+
+            ITestChannel channel = new BlipTestHostChannel(blipTestHostChannelSettings, new TestCaseSettings
             {
                 User = "random",
                 Channel = "Messenger"

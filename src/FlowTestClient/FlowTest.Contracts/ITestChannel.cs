@@ -11,6 +11,8 @@ namespace FlowTest.Contracts
     public interface ITestChannel
     {
 
+        Task InitializeChannelAsync(CancellationToken cancellationToken);
+
         //Test to bot message
         Task SendTextAsync(string text, CancellationToken cancellationToken);
 

@@ -9,21 +9,39 @@ using System.Threading;
 using Take.Blip.Client.Testing;
 using FlowTest.Contracts.Models;
 using Lime.Messaging.Contents;
+using System.Reflection;
+using NSubstitute;
+using Takenet.MessagingHub.Client.Extensions.EventTracker;
 
 namespace FlowTest.Channel.BlipTestHost
 {
     public class BlipTestHostChannel : ITestChannel
     {
-        private readonly TestHost _testHost;
+        private readonly BlipTestHostChannelSettings _blipTestHostChannelSettings;
         private readonly TestCaseSettings _settings;
 
+        private TestHost _testHost;
+
         public BlipTestHostChannel(
-            TestHost testHost,
+            BlipTestHostChannelSettings blipTestHostChannelSettings,
             TestCaseSettings settings
             )
         {
-            _testHost = testHost;
+            _blipTestHostChannelSettings = blipTestHostChannelSettings;
             _settings = settings;
+        }
+
+        public async Task InitializeChannelAsync(CancellationToken cancellationToken)
+        {
+            _testHost = new TestHost(
+                _blipTestHostChannelSettings.AssemblyReference,
+                _blipTestHostChannelSettings.MessageTimeout,
+                _blipTestHostChannelSettings.NotificationTimeout
+                );
+
+            var eventTrackExtension = Substitute.For<IEventTrackExtension>();
+
+            var container = await _testHost.AddRegistrationAndStartAsync(eventTrackExtension);
         }
 
         public async Task<Document> ReceiveAsync(CancellationToken cancellationToken)
